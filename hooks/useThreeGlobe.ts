@@ -94,35 +94,33 @@ export const useThreeGlobe = ({
     canvas.width = 2048;
     canvas.height = 1024;
     const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.fillStyle = '#051a2f';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      const equatorY = canvas.height / 2;
-      const glGrad = ctx.createLinearGradient(
-        0,
-        equatorY - 50,
-        0,
-        equatorY + 50
-      );
-      glGrad.addColorStop(0, 'rgba(30, 144, 255, 0)');
-      glGrad.addColorStop(0.5, 'rgba(30, 144, 255, 0.3)');
-      glGrad.addColorStop(1, 'rgba(30, 144, 255, 0)');
-      ctx.fillStyle = glGrad;
-      ctx.fillRect(0, equatorY - 80, canvas.width, 160);
-      ctx.fillStyle = '#ef4444';
-      ctx.fillRect(canvas.width / 2 - 5, 0, 10, canvas.height);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
-      ctx.lineWidth = 2;
-      for (let i = 0; i < 20; i++) {
-        ctx.beginPath();
-        ctx.moveTo(0, i * (canvas.height / 20));
-        ctx.lineTo(canvas.width, i * (canvas.height / 20));
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(i * (canvas.width / 20), 0);
-        ctx.lineTo(i * (canvas.width / 20), canvas.height);
-        ctx.stroke();
-      }
+    if (!ctx) {
+      console.error('Failed to get 2D context for globe canvas');
+      return;
+    }
+
+    ctx.fillStyle = '#051a2f';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const equatorY = canvas.height / 2;
+    const glGrad = ctx.createLinearGradient(0, equatorY - 50, 0, equatorY + 50);
+    glGrad.addColorStop(0, 'rgba(30, 144, 255, 0)');
+    glGrad.addColorStop(0.5, 'rgba(30, 144, 255, 0.3)');
+    glGrad.addColorStop(1, 'rgba(30, 144, 255, 0)');
+    ctx.fillStyle = glGrad;
+    ctx.fillRect(0, equatorY - 80, canvas.width, 160);
+    ctx.fillStyle = '#ef4444';
+    ctx.fillRect(canvas.width / 2 - 5, 0, 10, canvas.height);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 20; i++) {
+      ctx.beginPath();
+      ctx.moveTo(0, i * (canvas.height / 20));
+      ctx.lineTo(canvas.width, i * (canvas.height / 20));
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(i * (canvas.width / 20), 0);
+      ctx.lineTo(i * (canvas.width / 20), canvas.height);
+      ctx.stroke();
     }
 
     const globeTexture = new THREE.CanvasTexture(canvas);

@@ -67,8 +67,15 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             >
               <div className="font-black text-white mb-1">{island.name}</div>
               <div className="text-xs text-slate-400 font-bold">
-                {island.sea} • {island.arc} • Ep. {island.episodes[0]}
-                {island.episodes[1] ? `-${island.episodes[1]}` : '+'}
+                {island.sea} • {island.arc} •
+                {island.episodes.length > 0 ? (
+                  <>
+                    Ep. {island.episodes[0]}
+                    {island.episodes[1] ? `-${island.episodes[1]}` : '+'}
+                  </>
+                ) : (
+                  ' N/A'
+                )}
               </div>
             </button>
           ))}
@@ -77,4 +84,3 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     </div>
   );
 };
-

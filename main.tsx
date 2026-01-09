@@ -141,7 +141,16 @@ const App = () => {
                   Episodes
                 </p>
                 <p className="text-sm font-bold text-amber-100">
-                  {selectedIsland.episodes[0]} - {selectedIsland.episodes[1]}
+                  {selectedIsland.episodes.length > 0 ? (
+                    <>
+                      {selectedIsland.episodes[0]}
+                      {selectedIsland.episodes[1]
+                        ? ` - ${selectedIsland.episodes[1]}`
+                        : ''}
+                    </>
+                  ) : (
+                    'N/A'
+                  )}
                 </p>
               </div>
             </div>

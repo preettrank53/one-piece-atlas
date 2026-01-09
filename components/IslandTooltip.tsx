@@ -7,7 +7,10 @@ interface IslandTooltipProps {
   position: { x: number; y: number } | null;
 }
 
-export const IslandTooltip: React.FC<IslandTooltipProps> = ({ island, position }) => {
+export const IslandTooltip: React.FC<IslandTooltipProps> = ({
+  island,
+  position,
+}) => {
   if (!island || !position) return null;
 
   return (
@@ -23,16 +26,25 @@ export const IslandTooltip: React.FC<IslandTooltipProps> = ({ island, position }
         }}
       >
         <div className="bg-black/90 backdrop-blur-xl border border-white/20 rounded-2xl px-4 py-3 shadow-2xl">
-          <div className="text-sm font-black text-white mb-1">{island.name}</div>
-          <div className="text-xs text-slate-400 font-bold">
-            Ep. {island.episodes[0]}
-            {island.episodes[1] ? ` - ${island.episodes[1]}` : '+'}
+          <div className="text-sm font-black text-white mb-1">
+            {island.name}
           </div>
-          <div className="text-xs text-amber-500 font-bold mt-1">{island.sea}</div>
+          <div className="text-xs text-slate-400 font-bold">
+            {island.episodes.length > 0 ? (
+              <>
+                Ep. {island.episodes[0]}
+                {island.episodes[1] ? ` - ${island.episodes[1]}` : '+'}
+              </>
+            ) : (
+              'N/A'
+            )}
+          </div>
+          <div className="text-xs text-amber-500 font-bold mt-1">
+            {island.sea}
+          </div>
         </div>
         <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-2 h-2 bg-black/90 border-l border-b border-white/20 rotate-45" />
       </motion.div>
     </AnimatePresence>
   );
 };
-

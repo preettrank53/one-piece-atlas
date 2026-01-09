@@ -1,8 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Anchor, Target, BookOpen, Users, Tv, Wind, Snowflake, Sparkles, Flame, Map as MapIcon } from 'lucide-react';
+import {
+  Anchor,
+  Target,
+  BookOpen,
+  Users,
+  Tv,
+  Wind,
+  Snowflake,
+  Sparkles,
+  Flame,
+  Map as MapIcon,
+} from 'lucide-react';
 import type { Island, CrewMember, Bounty } from '../utils/islandData';
-import { getCurrentArc } from '../utils/episodeUtils';
 
 interface IslandDetailsProps {
   island: Island | null;
@@ -38,7 +48,7 @@ const VISUAL_ICONS: Record<string, React.ReactNode> = {
 
 export const IslandDetails: React.FC<IslandDetailsProps> = ({
   island,
-  currentEpisode,
+  currentEpisode: _currentEpisode,
   currentBounty,
   currentCrew,
 }) => {
@@ -54,14 +64,18 @@ export const IslandDetails: React.FC<IslandDetailsProps> = ({
           <p className="text-xl font-black uppercase tracking-[0.4em]">
             Setting Sail
           </p>
-          <p className="text-sm text-slate-500 mt-2">Select an island to view details</p>
+          <p className="text-sm text-slate-500 mt-2">
+            Select an island to view details
+          </p>
         </motion.div>
       </div>
     );
   }
 
-  const currentArc = getCurrentArc(currentEpisode);
-  const episodeRange = `${island.episodes[0]}${island.episodes[1] ? ` - ${island.episodes[1]}` : '+'}`;
+  const episodeRange =
+    island.episodes.length > 0
+      ? `${island.episodes[0]}${island.episodes[1] ? ` - ${island.episodes[1]}` : '+'}`
+      : 'N/A';
 
   return (
     <motion.div
@@ -79,7 +93,9 @@ export const IslandDetails: React.FC<IslandDetailsProps> = ({
             <span className="text-[10px] uppercase font-black text-red-500 tracking-[0.4em] mb-4 block">
               Log Entry
             </span>
-            <h2 className="text-5xl font-black mb-2 tracking-tighter">{island.name}</h2>
+            <h2 className="text-5xl font-black mb-2 tracking-tighter">
+              {island.name}
+            </h2>
             <div className="flex items-center justify-center gap-3 opacity-60">
               <Anchor className="w-4 h-4 text-amber-500" />
               <span className="text-sm font-bold uppercase">{island.sea}</span>
@@ -114,14 +130,18 @@ export const IslandDetails: React.FC<IslandDetailsProps> = ({
           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
             Active Bounty
           </p>
-          <p className="text-2xl font-black">{currentBounty.amount.toLocaleString()}฿</p>
+          <p className="text-2xl font-black">
+            {currentBounty.amount.toLocaleString()}฿
+          </p>
         </div>
         <div className="p-6 bg-white/5 rounded-[2rem] border border-white/5">
           <BookOpen className="w-6 h-6 text-red-500 mb-4" />
           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
             Poneglyphs
           </p>
-          <p className="text-2xl font-black">{island.hasPoneglyph ? 'SECURED' : 'NONE'}</p>
+          <p className="text-2xl font-black">
+            {island.hasPoneglyph ? 'SECURED' : 'NONE'}
+          </p>
         </div>
       </div>
 
@@ -138,19 +158,25 @@ export const IslandDetails: React.FC<IslandDetailsProps> = ({
                   </p>
                   <div className="flex items-center gap-2 mt-1">
                     {WEATHER_ICONS[island.weather]}
-                    <span className="text-sm font-bold capitalize">{island.weather}</span>
+                    <span className="text-sm font-bold capitalize">
+                      {island.weather}
+                    </span>
                   </div>
                 </div>
               </div>
             )}
             {island.visual && (
               <div className="flex items-center gap-2">
-                {VISUAL_ICONS[island.visual] || <MapIcon className="w-5 h-5 text-slate-400" />}
+                {VISUAL_ICONS[island.visual] || (
+                  <MapIcon className="w-5 h-5 text-slate-400" />
+                )}
                 <div>
                   <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                     Type
                   </p>
-                  <span className="text-sm font-bold capitalize">{island.visual.replace('_', ' ')}</span>
+                  <span className="text-sm font-bold capitalize">
+                    {island.visual.replace('_', ' ')}
+                  </span>
                 </div>
               </div>
             )}
@@ -196,4 +222,3 @@ export const IslandDetails: React.FC<IslandDetailsProps> = ({
     </motion.div>
   );
 };
-
